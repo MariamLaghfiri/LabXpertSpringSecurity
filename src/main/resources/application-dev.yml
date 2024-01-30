@@ -5,6 +5,13 @@ server:
 
 spring:
   mvc:
+    mappings:
+      "/**":
+        allowed-origins: "*"
+        allowed-methods: "*"
+        allowed-headers: "*"
+
+
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
   application:
