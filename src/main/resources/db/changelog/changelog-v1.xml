@@ -3,15 +3,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
 
-    <changeSet id="create-tests-table" author="ait-si-ahmad-ayoub">
-        <createTable tableName="tests">
-            <column name="testid" type="NUMERIC"/>
-            <column name="nametest" type="TEXT"/>
-            <column name="minvalue" type="DOUBLE"/>
-            <column name="maxvalue" type="DOUBLE"/>
-            <column name="measurementunits" type="TEXT"/>
-        </createTable>
-    </changeSet>
+
 
     <changeSet id="1" author="chaimaa">
         <loadData
