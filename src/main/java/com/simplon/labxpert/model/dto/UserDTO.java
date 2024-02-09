@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.simplon.labxpert.model.dtoViews.Views;
-import com.simplon.labxpert.model.enums.UserRole;
+import com.simplon.labxpert.model.enums.EUserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,7 +43,7 @@ public class UserDTO {
     private String password;
     @NotNull(message = "User role is mandatory")
     @JsonView({Views.CreateUser.class, Views.UpdateUser.class})
-    private UserRole userRole;
+    private EUserRole userRole;
 
     @JsonView({Views.CreateUser.class, Views.UpdateUser.class})
     @NotEmpty(message = "Personal info is mandatory")

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,6 +37,7 @@ public class AnalysisController {
      * @return a list of all analysis.
      */
     @GetMapping
+    @PreAuthorize("hasRole('TECHNICIAN') or hasRole('LABORATORY_MANAGER') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<AnalysisDTO>> getAllAnalysis() {
         LOGGER.info("Getting all analysis");
         List<AnalysisDTO> analysisDTOList = analysisService.findAllAnalysis();
@@ -49,6 +51,7 @@ public class AnalysisController {
      * @return an analysis.
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('TECHNICIAN') or hasRole('LABORATORY_MANAGER') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<AnalysisDTO> getAnalysisById(@PathVariable Long id) {
         LOGGER.info("Getting analysis with id : {}", id);
         AnalysisDTO analysisDTO = analysisService.findAnalysisById(id);
@@ -62,6 +65,7 @@ public class AnalysisController {
      * @return the created analysis.
      */
     @PostMapping
+    @PreAuthorize("hasRole('TECHNICIAN') or hasRole('LABORATORY_MANAGER') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<AnalysisDTO> createAnalysis(@Valid @RequestBody AnalysisDTO analysisDTO) {
         LOGGER.info("Creating analysis from controller");
         AnalysisDTO analysisDTOCreated = analysisService.createAnalysis(analysisDTO);
@@ -76,6 +80,7 @@ public class AnalysisController {
      * @return the started analysis.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('TECHNICIAN') or hasRole('LABORATORY_MANAGER') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<?> startAnalysis(@PathVariable Long id) {
         LOGGER.info("Starting analysis with id : {}", id);
         analysisService.startAnalysis(id);
@@ -88,6 +93,7 @@ public class AnalysisController {
      * @param id the id of the analysis to delete.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('TECHNICIAN') or hasRole('LABORATORY_MANAGER') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<String> deleteAnalysis(@PathVariable Long id) {
         LOGGER.info("Deleting analysis with id : {}", id);
         String message = analysisService.deleteAnalysis(id);

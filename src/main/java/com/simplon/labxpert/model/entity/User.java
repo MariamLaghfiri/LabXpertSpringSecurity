@@ -1,9 +1,11 @@
 package com.simplon.labxpert.model.entity;
-import com.simplon.labxpert.model.enums.UserRole;
+import com.simplon.labxpert.model.enums.EUserRole;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,8 +36,11 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "userRole", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
     @Column(name = "personalInfo")
     private String personalInfo;
     @OneToMany(mappedBy = "user")

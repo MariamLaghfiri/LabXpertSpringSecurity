@@ -43,3 +43,8 @@ logging:
     org.hibernate.SQL: ERROR
   file:
     name: logs/labxpert.log
+
+simplon:
+  app:
+    jwtSecret: "======================simplon=Spring==========================="
+    jwtExpirationMs: 86400000

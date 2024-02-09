@@ -2,7 +2,7 @@ package com.simplon.labxpert.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplon.labxpert.model.dto.UserDTO;
-import com.simplon.labxpert.model.enums.UserRole;
+import com.simplon.labxpert.model.enums.EUserRole;
 import com.simplon.labxpert.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,7 +51,7 @@ class UserControllerTest {
         newUser.setIsEmailVerified(true);
         newUser.setUsername("testUser");
         newUser.setPassword("TestPassword123!");
-        newUser.setUserRole(UserRole.TECHNICIAN);
+        newUser.setUserRole(EUserRole.TECHNICIAN);
         newUser.setPersonalInfo("Some personal info");
     }
     /**
