@@ -23,6 +23,16 @@ public class JwtUtils {
     @Value("${simplon.app.jwtExpirationMs}")
     private String jwtExpirationMs;
 
+    @Value("${simplon.app.jwtRefreshExpiration}")
+    private String jwtRefreshExpiration;
+
+    public JwtUtils(){
+    }
+    public JwtUtils(String jwtSecret, String jwtExpirationMs, String jwtRefreshExpiration) {
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationMs = jwtExpirationMs;
+        this.jwtRefreshExpiration = jwtRefreshExpiration;
+    }
     public String generateJwtToken(Authentication authentication){
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()

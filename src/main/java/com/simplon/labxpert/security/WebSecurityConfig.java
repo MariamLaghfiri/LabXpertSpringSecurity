@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,13 +47,24 @@ public class WebSecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
-        http.csrf(csrf -> csrf.disable())
+        http
+                .cors()
+                .and()
+                .csrf()
+                .disable()
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.regexMatchers("/api/v1/auth").permitAll()
-                                .anyRequest().authenticated()
-                );
+                .authorizeHttpRequests(auth ->{
+                            auth.antMatchers("/api/v1/auth/**").permitAll()
+                            .antMatchers("/api/v1/users/**").hasRole("ADMINISTRATOR")
+                            .antMatchers("/api/v1/analysis/**").hasAnyRole("TECHNICIAN", "LABORATORY_MANAGER")
+                            .antMatchers("/api/v1/samples/**", "/api/v1/patient/**", "/api/v1/testResult/**").hasRole("TECHNICIAN")
+                            .antMatchers("/api/v1/reagent/**").hasRole("LABORATORY_MANAGER")
+                            .anyRequest().authenticated();
+                })
+                .formLogin(Customizer.withDefaults())
+                .oauth2Login(Customizer.withDefaults());
+
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

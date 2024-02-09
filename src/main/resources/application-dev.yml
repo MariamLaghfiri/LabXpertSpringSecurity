@@ -33,6 +33,13 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
     enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Iv1.63aff89c1a492ed3
+            client-secret: 525405c0e88b40455174c025351d5bc6009e0fe1
 
 
 logging:
@@ -48,3 +55,4 @@ simplon:
   app:
     jwtSecret: "======================simplon=Spring==========================="
     jwtExpirationMs: 86400000
+    jwtRefreshExpiration: 172800000
